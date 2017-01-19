@@ -1,0 +1,115 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
+<link rel="import" href="placetobe-stepper-behavior.html">
+<link rel="import" href="../placetobe-behaviors/placetobe-styles-behavior.html">
+<link rel="import" href="../placetobe-styles/placetobe-styles.html">
+<link rel="import" href="../placetobe-button/placetobe-button.html">
+
+<!--
+`placetobe-stepper-form`
+Placetobe Stepper Form
+
+@demo demo/index.html 
+-->
+
+<dom-module id="placetobe-stepper-form">
+  <template>
+    <style>
+      :host {
+        display: block;
+        overflow: auto;
+      }
+
+      header {
+        padding: var(--placetobe-margin);
+        background-color: var(--placetobe-color-taupe);
+        position: -webkit-sticky;
+        top:-26px;
+      }
+
+      footer {
+        padding: var(--placetobe-margin);
+      }
+
+      main {
+        @apply --placetobe-font-body;
+        padding: var(--placetobe-margin);
+      }
+
+      h3 {
+        @apply --placetobe-font-heading3;
+        transition: 0.3s font-size;
+      }
+
+      :host([scrolled]) h3 {
+        font-size: var(--placetobe-font-body-size);
+      }
+
+      h6 {
+        @apply --placetobe-font-body;
+        overflow: hidden;
+        max-height: 30px;
+        transition: 0.1s opacity;
+      }
+
+      :host([scrolled]) h6 {
+        opacity: 0;
+      }
+
+
+    </style>
+
+    <section id="container">
+      <header on-tap="scrollToTop">
+        <h6>[[currentStepLabel]] van [[numberOfSteps]]</h6>
+        <h3>[[currentStepName]]</h3>
+      </header>
+      <main>
+
+        <iron-pages selected="[[currentStepIndex]]">
+          <slot></slot>
+        </iron-pages>
+
+      </main>
+      <footer>
+        <placetobe-button disabled$="[[!canReturn]]" on-tap="return"><span>terug</span></placetobe-button>
+        <placetobe-button disabled$="[[!canProceed]]" on-tap="proceed"><span>verder</span></placetobe-button>
+      </footer>
+    </section>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'placetobe-stepper-form',
+      behaviors: [PlacetobeStylesBehavior, PlacetobeStepperBehavior],
+
+      properties: {
+        steps: {
+          type: Array
+        },
+
+        scrolled: {
+          type: Boolean,
+          value: false,
+          readOnly: true,
+          reflectToAttribute: true
+        }
+      },
+
+      ready: function() {
+        this.addEventListener('scroll', this._updateScrolled);
+      },
+
+      scrollToTop: function() {
+        this.scrollTop = 0;
+      },
+
+      _updateScrolled: function() {
+        return this._setScrolled(this.scrollTop > 20);
+      }
+
+    });
+  </script>
+</dom-module>
