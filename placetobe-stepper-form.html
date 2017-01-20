@@ -4,6 +4,7 @@
 <link rel="import" href="../placetobe-behaviors/placetobe-styles-behavior.html">
 <link rel="import" href="../placetobe-styles/placetobe-styles.html">
 <link rel="import" href="../placetobe-button/placetobe-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
 
 <!--
 `placetobe-stepper-form`
@@ -25,6 +26,21 @@ Placetobe Stepper Form
         background-color: var(--placetobe-color-taupe);
         position: -webkit-sticky;
         top:-26px;
+        overflow: hidden;
+      }
+
+      header nav {
+        @apply --placetobe-flex-layout--horizontal;
+        @apply --placetobe-cross-align--stretch;
+        transition: 0.3s transform;
+      }
+
+      :host([scrolled]) header nav {
+        transform: translateY(-20px);
+      }
+
+      header nav h6 {
+        @apply --placetobe-flex-item--3;
       }
 
       footer {
@@ -34,6 +50,20 @@ Placetobe Stepper Form
       main {
         @apply --placetobe-font-body;
         padding: var(--placetobe-margin);
+      }
+
+      iron-icon {
+        margin: 3px 0 0 0;
+        cursor: pointer;
+        height: 18px;
+        vertical-align: top;
+        padding-top: 3px 0 0 0;
+        transition: 0.3s max-width;
+        max-width: 30px;
+      }
+
+      #returnButton[data-hidden] {
+        max-width: 0;
       }
 
       h3 {
@@ -50,6 +80,7 @@ Placetobe Stepper Form
         overflow: hidden;
         max-height: 30px;
         transition: 0.1s opacity;
+        margin-left: 3px;
       }
 
       :host([scrolled]) h6 {
@@ -61,8 +92,12 @@ Placetobe Stepper Form
 
     <section id="container">
       <header on-tap="scrollToTop">
-        <h6>[[currentStepLabel]] van [[numberOfSteps]]</h6>
-        <h3>[[currentStepName]]</h3>
+        <nav>
+          <iron-icon id="returnButton" icon="icons:arrow-back" on-tap="return" data-hidden$="[[!canReturn]]"></iron-icon>          
+          <h6>[[currentStepLabel]] van [[numberOfSteps]]</h6>
+          <iron-icon hidden$="[[!showCloseIcon]]" icon="icons:close" on-tap="hide"></iron-icon>
+        </nav>
+          <h3>[[currentStepName]]</h3>
       </header>
       <main>
 
@@ -72,8 +107,11 @@ Placetobe Stepper Form
 
       </main>
       <footer>
-        <placetobe-button disabled$="[[!canReturn]]" on-tap="return"><span>terug</span></placetobe-button>
-        <placetobe-button disabled$="[[!canProceed]]" on-tap="proceed"><span>verder</span></placetobe-button>
+        <placetobe-button
+          disabled$="[[!canProceed]]"
+          on-tap="proceed"
+          hidden$="[[lastStep]]"
+        ><span>verder</span></placetobe-button>
       </footer>
     </section>
 
@@ -86,8 +124,14 @@ Placetobe Stepper Form
       behaviors: [PlacetobeStylesBehavior, PlacetobeStepperBehavior],
 
       properties: {
+
         steps: {
           type: Array
+        },
+
+        showCloseIcon: {
+          type: Boolean,
+          value: false
         },
 
         scrolled: {
@@ -100,6 +144,10 @@ Placetobe Stepper Form
 
       ready: function() {
         this.addEventListener('scroll', this._updateScrolled);
+      },
+
+      hide: function() {
+        this.hidden = true;
       },
 
       scrollToTop: function() {

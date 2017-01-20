@@ -35,7 +35,13 @@
 
       finished: {
         type: Boolean,
-        computed: '_computeFinished(steps.*, numberOfSteps)'
+        computed: '_computeFinished(steps.*, numberOfSteps)',
+        observer: '_handleFinishedChanged'
+      },
+
+      lastStep: {
+        type: Boolean,
+        computed: '_computeLastStep(currentStepIndex, numberOfSteps)'
       },
 
       canProceed: {
@@ -103,6 +109,10 @@
 
     },
 
+    _computeLastStep: function(currentStepIndex, numberOfSteps) {
+      return (currentStepIndex+1 >= numberOfSteps)
+    },
+
     _computeCanProceed: function(stepsChange, currentStepIndex, numberOfSteps) {
       var steps = stepsChange.base;
       if(!steps) return false;
@@ -119,6 +129,10 @@
 
     _computeCanReturn(currentStepIndex) {
       return (currentStepIndex > 0);
+    },
+
+    _handleFinishedChanged: function(finished) {
+      if(finished) return this.fire('finished');
     }
 
   }
