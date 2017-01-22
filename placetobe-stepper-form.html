@@ -89,6 +89,10 @@ Placetobe Stepper Form
         transform: translateX(-36px);
       }
 
+      #closeButton[data-hidden] {
+        opacity: 0;
+      }
+
       h3 {
         @apply --placetobe-font-heading3;
         transition: 0.3s font-size;
@@ -123,7 +127,7 @@ Placetobe Stepper Form
 
           <h6>[[currentStepLabel]] van [[numberOfSteps]]</h6>
 
-          <button data-hidden$="[[!showCloseIcon]]" on-tap="hide">
+          <button id="closeButton" data-hidden$="[[!showCloseIcon]]" on-tap="hide">
             <iron-icon icon="icons:close"></iron-icon>          
           </button>
 
