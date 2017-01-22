@@ -219,7 +219,8 @@ Placetobe Stepper Form
       },
 
       observers: [
-        'scrollToTop(currentStepIndex)'
+        'scrollToTop(currentStepIndex)',
+        '_updateScrolled(currentStepIndex, steps.*)'
       ],
 
       ready: function() {
@@ -236,7 +237,6 @@ Placetobe Stepper Form
 
       scrollToTop: function() {
         this.scrollTop = 0;
-        this._updateScrolled();
       },
 
       _updateScrolled: function() {
