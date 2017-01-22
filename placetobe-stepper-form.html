@@ -26,9 +26,16 @@ Placetobe Stepper Form
         padding: var(--placetobe-margin);
         background-color: var(--placetobe-color-taupe);
         position: -webkit-sticky;
-        top:-26px;
+        top:-36px;
         overflow: hidden;
         text-align: center;
+        z-index: 1;
+      }
+
+      @media (min-width: 601px) {
+        header {
+          top: -26px;
+        }
       }
 
       header nav {
