@@ -27,11 +27,12 @@ Placetobe Stepper Form
         position: -webkit-sticky;
         top:-26px;
         overflow: hidden;
+        text-align: center;
       }
 
       header nav {
         @apply --placetobe-flex-layout--horizontal;
-        @apply --placetobe-cross-align--stretch;
+        @apply --placetobe-cross-align--center;
         transition: 0.3s transform;
       }
 
@@ -52,18 +53,40 @@ Placetobe Stepper Form
         padding: var(--placetobe-margin);
       }
 
+      nav button {
+        border: 0;
+        background-color: transparent;
+        width: calc(var(--placetobe-margin) * 2);
+        height: calc(var(--placetobe-margin) * 2);
+        overflow: hidden;
+        outline: none;
+        border-radius: 50%;
+      }
+
+      nav button:focus {
+        background-color: rgba(0,0,0,0.1);
+      }
+
       iron-icon {
-        margin: 3px 0 0 0;
+        margin: 0;
         cursor: pointer;
-        height: 18px;
+        height: 100%;
+        width: 100%;
         vertical-align: top;
-        padding-top: 3px 0 0 0;
-        transition: 0.3s max-width;
-        max-width: 30px;
+        padding: 0;
+      }
+
+      #returnButton iron-icon {
+        transition: 0.3s transform;        
       }
 
       #returnButton[data-hidden] {
-        max-width: 0;
+        pointer-events: none;
+        background-color: transparent;
+      }
+
+      #returnButton[data-hidden] iron-icon {
+        transform: translateX(-36px);
       }
 
       h3 {
@@ -93,9 +116,17 @@ Placetobe Stepper Form
     <section id="container">
       <header on-tap="scrollToTop">
         <nav>
-          <iron-icon id="returnButton" icon="icons:arrow-back" on-tap="return" data-hidden$="[[!canReturn]]"></iron-icon>          
+
+          <button id="returnButton" on-tap="return" data-hidden$="[[!canReturn]]">
+            <iron-icon icon="icons:arrow-back"></iron-icon>
+          </button>
+
           <h6>[[currentStepLabel]] van [[numberOfSteps]]</h6>
-          <iron-icon hidden$="[[!showCloseIcon]]" icon="icons:close" on-tap="hide"></iron-icon>
+
+          <button hidden$="[[!showCloseIcon]]" on-tap="hide">
+            <iron-icon icon="icons:close"></iron-icon>          
+          </button>
+
         </nav>
           <h3>[[currentStepName]]</h3>
       </header>
