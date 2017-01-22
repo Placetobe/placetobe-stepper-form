@@ -67,6 +67,11 @@ Placetobe Stepper Form
         background-color: rgba(0,0,0,0.1);
       }
 
+      nav button[data-hidden] {
+        pointer-events: none;
+        background-color: transparent;
+      }
+
       iron-icon {
         margin: 0;
         cursor: pointer;
@@ -78,11 +83,6 @@ Placetobe Stepper Form
 
       #returnButton iron-icon {
         transition: 0.3s transform;        
-      }
-
-      #returnButton[data-hidden] {
-        pointer-events: none;
-        background-color: transparent;
       }
 
       #returnButton[data-hidden] iron-icon {
@@ -123,7 +123,7 @@ Placetobe Stepper Form
 
           <h6>[[currentStepLabel]] van [[numberOfSteps]]</h6>
 
-          <button hidden$="[[!showCloseIcon]]" on-tap="hide">
+          <button data-hidden$="[[!showCloseIcon]]" on-tap="hide">
             <iron-icon icon="icons:close"></iron-icon>          
           </button>
 
