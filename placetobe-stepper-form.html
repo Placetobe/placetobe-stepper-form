@@ -179,6 +179,10 @@ Placetobe Stepper Form
         }
       },
 
+      observers: [
+        'scrollToTop(currentStepIndex)'
+      ],
+
       ready: function() {
         this.addEventListener('scroll', this._updateScrolled);
       },
