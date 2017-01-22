@@ -53,7 +53,30 @@ Placetobe Stepper Form
       }
 
       footer {
-        padding: var(--placetobe-margin);
+        position: -webkit-sticky;
+        bottom: 0;
+        padding: 0;
+        background-color: var(--placetobe-color-taupe);
+        @apply --placetobe-flex-layout--horizontal;
+        @apply --placetobe-flex-align--end;
+
+        --placetobe-button-color: var(--placetobe-color-darkblue);
+        --placetobe-button-tint-color: var(--placetobe-color-taupe);
+        --placetobe-button-hover-color: var(--placetobe-color-darkblue);
+        --placetobe-button-tint-hover-color: var(--placetobe-color-taupe);
+
+        transition: 0.1s max-height ease-in-out;
+        max-height: 100px;
+        overflow: hidden;
+      }
+
+      footer placetobe-button {
+        margin: var(--placetobe-margin);
+      }
+
+      footer[data-hidden] {
+        max-height: 0;
+        padding: 0;
       }
 
       main {
@@ -150,11 +173,9 @@ Placetobe Stepper Form
         </iron-pages>
 
       </main>
-      <footer>
+      <footer data-hidden$="[[!canProceed]]">
         <placetobe-button
-          disabled$="[[!canProceed]]"
           on-tap="proceed"
-          hidden$="[[lastStep]]"
         ><span>verder</span></placetobe-button>
       </footer>
     </section>
