@@ -43,6 +43,7 @@ Placetobe Stepper Form
         @apply --placetobe-flex-layout--horizontal;
         @apply --placetobe-cross-align--center;
         transition: 0.3s transform;
+        transition: 0.1s opacity;
       }
 
       :host([scrolled]) header nav {
@@ -145,11 +146,10 @@ Placetobe Stepper Form
         @apply --placetobe-font-body;
         overflow: hidden;
         max-height: 30px;
-        transition: 0.1s opacity;
         margin-left: 3px;
       }
 
-      :host([scrolled]) h6 {
+      :host([scrolled]) nav {
         opacity: 0;
       }
 
